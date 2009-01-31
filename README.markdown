@@ -1,4 +1,4 @@
-# SsoWhat
+# SSo What
 
 Sso What is used to generate a session domain for single sign-on which works regardless of sub-domains and different hosts in different environments. So. If you have two servers, `kill.for.thrills.hypo.luxa` and `thrill.olympics.hypo.luxa`, the session domain would resolve to `hypo.luxa`.  
 
@@ -18,5 +18,6 @@ Copyright (c) 2008 {Centro}[www.centro.net], released under the MIT license.
 
 Authored by:
 
-  {Gabriel Gironda}[gabriel.gironda@gmail.com]
-  {Josh Davison}[josh.davison@centro.net]
+    {Gabriel Gironda}[gabriel.gironda@gmail.com]
+    {Josh Davison}[josh.davison@centro.net]
+    {Justin Knowlden}[gus@gusg.us]
