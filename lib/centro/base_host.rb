@@ -1,6 +1,6 @@
 # SsoWhat
 module Centro
-  module SsoWhat
+  module BaseHost
     module CgiRequestExtensions
       
       def self.included(base)
@@ -30,4 +30,4 @@ module Centro
   end
 end
 
-ActionController::CgiRequest.instance_eval { include Centro::SsoWhat::CgiRequestExtensions }
+ActionController::CgiRequest.instance_eval { include Centro::BaseHost::CgiRequestExtensions }

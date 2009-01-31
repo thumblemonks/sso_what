@@ -1,11 +1,6 @@
-require 'test/unit'
-require 'rubygems'
-require 'shoulda'
-require 'mocha'
-require 'action_controller'
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'init'))
+require File.join(File.dirname(__FILE__), 'test_helper')
 
-class SsoWhatTest < Test::Unit::TestCase
+class BaseHostTest < Test::Unit::TestCase
 
   context "with session_domain option set to :base_host" do
     setup do
