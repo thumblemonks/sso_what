@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.rubyforge_project = %q{sso_what}
 
   s.has_rdoc = true
-  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Load Model", "--main", "README.markdown"]
-  s.extra_rdoc_files = ["README.markdown"]
+  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "SSO What", "--main", "README.markdown"]
+  s.extra_rdoc_files = %w[README.markdown MIT-LICENSE]
   
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to?(:required_rubygems_version=)
   s.rubygems_version = "1.3.1"
@@ -20,9 +20,19 @@ Gem::Specification.new do |s|
 
   # run git ls-files to get an updated list
   s.files = %w[
+    MIT-LICENSE
+    README.markdown
+    Rakefile
+    lib/centro/base_host.rb
+    lib/sso_what.rb
+    lib/thumblemonks/subdomain_cookie_jar.rb
+    sso_what.gemspec
   ]
   
   s.test_files = %w[
+    test/base_host_test.rb
+    test/subdomain_cookie_jar_test.rb
+    test/test_helper.rb
   ]
 
   s.post_install_message = %q{Choosy ministries choose Thumble Monks}
