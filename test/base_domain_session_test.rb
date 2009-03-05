@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-class MultiDomainSessionTest < Test::Unit::TestCase
+class BaseDomainSessionTest < Test::Unit::TestCase
   # Macros
 
   def self.store_with_multi_domain(multi_domain_option, &block)

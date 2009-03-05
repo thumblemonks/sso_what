@@ -1,6 +1,6 @@
 module Centro
   module SsoWhat
-    module MultiDomainSession
+    module BaseDomainSession
       def self.included(klass)
         klass.alias_method_chain :call, :domain_override
       end
@@ -16,4 +16,4 @@ module Centro
   end # AbstractStore
 end # Centro
 
-ActionController::Session::AbstractStore.instance_eval { include Centro::SsoWhat::MultiDomainSession }
+ActionController::Session::AbstractStore.instance_eval { include Centro::SsoWhat::BaseDomainSession }

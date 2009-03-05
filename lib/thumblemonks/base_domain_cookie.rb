@@ -1,6 +1,6 @@
 module ThumbleMonks
   module SsoWhat
-    module MultiDomainCookie
+    module BaseDomainCookie
       def self.included(klass)
         klass.alias_method_chain :set_cookie, :domain_override
       end
@@ -24,4 +24,4 @@ module ThumbleMonks
   end # SsoWhat
 end # ThumbleMonks
 
-Rack::Response.instance_eval { include ThumbleMonks::SsoWhat::MultiDomainCookie }
+Rack::Response.instance_eval { include ThumbleMonks::SsoWhat::BaseDomainCookie }

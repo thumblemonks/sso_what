@@ -1,2 +1,2 @@
-require 'thumblemonks/multi_domain_session'
-require 'thumblemonks/multi_domain_cookie'
+require 'thumblemonks/base_domain_session'
+require 'thumblemonks/base_domain_cookie'
