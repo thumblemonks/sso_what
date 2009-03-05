@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = "sso_what"
-  s.version  = "0.2.0"
+  s.version  = "0.2.1"
   s.date     = "2009-03-05"
   s.summary  = "Rails extension to help with cookies in a system with sub-domains"
   s.email    = %w[gus@gusg.us gabriel.gironda@gmail.com]
@@ -23,15 +23,15 @@ Gem::Specification.new do |s|
     MIT-LICENSE
     README.markdown
     Rakefile
-    lib/centro/base_host.rb
     lib/sso_what.rb
-    lib/thumblemonks/subdomain_cookie_jar.rb
+    lib/thumblemonks/base_domain_cookie.rb
+    lib/thumblemonks/base_domain_session.rb
     sso_what.gemspec
   ]
   
   s.test_files = %w[
-    test/base_host_test.rb
-    test/subdomain_cookie_jar_test.rb
+    test/base_domain_cookie_test.rb
+    test/base_domain_session_test.rb
     test/test_helper.rb
   ]
 
