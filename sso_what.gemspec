@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name     = "sso_what"
   s.version  = "0.2.0"
-  s.date     = "2009-01-30"
+  s.date     = "2009-03-05"
   s.summary  = "Rails extension to help with cookies in a system with sub-domains"
   s.email    = %w[gus@gusg.us gabriel.gironda@gmail.com]
   s.homepage = "http://github.com/thumblemonks/sso_what"

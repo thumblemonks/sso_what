@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-class BaseHostTest < Test::Unit::TestCase
+class MultiDomainSessionTest < Test::Unit::TestCase
   # Macros
 
   def self.store_with_multi_domain(multi_domain_option, &block)
@@ -8,7 +8,7 @@ class BaseHostTest < Test::Unit::TestCase
       setup do
         @response = [nil, {"Set-Cookie" => nil}] # second element is the header
         @app = stub(:call => @response)
-        options = {:multi_domain => multi_domain_option, :expire_after => 3600}
+        options = {:base_domain => multi_domain_option, :expire_after => 3600}
         @store = TestSessionStore.new(@app, options)
       end
       yield if block_given?

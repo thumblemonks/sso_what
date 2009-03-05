@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-class DomainOverrideTest < Test::Unit::TestCase
+class MultiDomainCookieTest < Test::Unit::TestCase
   def setup
     # @response = OpenStruct.new(:headers => { "Set-Cookie" => [] })
     # @controller = OpenStruct.new(:request => @request, :response => @response)
