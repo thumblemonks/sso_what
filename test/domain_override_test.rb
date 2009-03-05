@@ -45,6 +45,6 @@ class DomainOverrideTest < Test::Unit::TestCase
   end
 
   def domain_for_the_first_cookie_found
-    @response["Set-Cookie"].scan(/domain=[a-z0-9-.]+/i).first
+    @response["Set-Cookie"].scan(/domain=[a-z0-9.-]+/i).first
   end
 end

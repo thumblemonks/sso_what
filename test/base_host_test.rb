@@ -1,66 +1,60 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class BaseHostTest < Test::Unit::TestCase
+  # Macros
 
-  context "with session_domain option set to :base_host" do
-    setup do
-      cgi, opts = CGI.new, {:session_domain => :base_host}
-      @request  = ActionController::CgiRequest.new(cgi, opts)
+  def self.store_with_multi_domain(multi_domain_option, &block)
+    context "session store with multi-domain set to #{multi_domain_option.inspect}" do
+      setup do
+        @response = [nil, {"Set-Cookie" => nil}] # second element is the header
+        @app = stub(:call => @response)
+        options = {:multi_domain => multi_domain_option, :expire_after => 3600}
+        @store = TestSessionStore.new(@app, options)
+      end
+      yield if block_given?
     end
-
-    should "nil the cookie domain when host consists of one part" do
-      @request.expects(:host).returns('foohost')
-      assert_nil @request.default_session_domain
-    end
-    
-    should "wildcard the cookie domain to the entire domain when host consists of two parts" do
-      @request.expects(:host).returns('foohost.bar')
-      assert_equal 'foohost.bar', @request.default_session_domain
-    end
-    
-    should "wildcard the cookie domain to the base domain when host consists of three parts" do
-      @request.expects(:host).returns('gah.foohost.bar')
-      assert_equal 'foohost.bar', @request.default_session_domain
-    end
-    
-    should "wildcard the cookie domain to the base domain when host consists of four parts" do
-      @request.expects(:host).returns('publisher.gah.foohost.bar')
-      assert_equal 'foohost.bar', @request.default_session_domain
-    end
-    
-    should "have session_options_with_string_keys insert the expected session domain into the hash" do
-      @request.expects(:host).returns('weird.biscotti.eating.habits')
-      generated_opts = @request.send(:session_options_with_string_keys)
-      assert_equal 'eating.habits', generated_opts['session_domain']
-    end
-    
   end
 
-  context "with session_domain option set to nil" do
-    setup do
-      cgi, opts = CGI.new, {:session_domain => nil}
-      @request  = ActionController::CgiRequest.new(cgi, opts)
+  def self.should_expect_cookie_domain_for_http_host(http_host, cookie_domain)
+    should "return #{cookie_domain} for #{http_host}" do
+      env = {"HTTP_HOST" => http_host}
+      @store.call(env)
+      expected = cookie_domain.nil? ? nil : "domain=#{cookie_domain}"
+      assert_equal expected, domain_for_the_first_cookie_found
     end
-    
-    should "return nil for default session domain" do
-      @request.stubs(:host).returns('gah.foohost.bar')
-      assert_nil @request.default_session_domain      
-    end
-    
+  end
+
+  def domain_for_the_first_cookie_found
+    set_cookie = @response[1]["Set-Cookie"]
+    set_cookie && set_cookie.scan(/domain=[a-z0-9.-]+/i).first
+  end
+
+  # Tests
+
+  store_with_multi_domain(true) do
+    should_expect_cookie_domain_for_http_host "foohost", nil
+    should_expect_cookie_domain_for_http_host "foohost.bar", ".foohost.bar"
+    should_expect_cookie_domain_for_http_host "gah.foohost.bar", ".foohost.bar"
+    should_expect_cookie_domain_for_http_host "publisher.gah.foohost.bar", ".foohost.bar"
+    should_expect_cookie_domain_for_http_host "gah.foohost.bar:3000", ".foohost.bar"
   end
   
-  context "with session_domain option set to a custom domain" do
-    setup do
-      cgi, opts = CGI.new, {:session_domain => 'biscotti.com'}
-      @request  = ActionController::CgiRequest.new(cgi, opts)
-    end
-    
-    should "return the manually set session domain" do
-      @request.stubs(:host).returns('gah.foohost.bar')
-      assert_equal 'biscotti.com', @request.default_session_domain      
-    end
-    
+  store_with_multi_domain(false) do
+    should_expect_cookie_domain_for_http_host "gah.foohost.bar", nil
   end
-  
-    
+
+  store_with_multi_domain(nil) do
+    should_expect_cookie_domain_for_http_host "gah.foohost.bar", nil
+  end
+
+end
+
+class TestSessionStore < ActionController::Session::AbstractStore
+  def get_session(env, sid)
+    [sid, {:foo => "bar"}]
+  end
+
+  def set_session(env, sid, session_data)
+    true
+  end
 end
